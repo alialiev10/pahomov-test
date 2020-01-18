@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styles from "./home-page.module.scss";
 import Button from "@material-ui/core/Button/Button";
 import authService from "../../services/auth.service";
-import PrivateRouteComponent from "../../components/private-route.component";
+import AuthorizedRoute from "../../components/authorizedRoute";
 import Redirect from "react-router-dom/es/Redirect";
 
 const HomePage = () => {
@@ -12,6 +12,7 @@ const HomePage = () => {
   }
   const logOut = () => {
     authService.clearTokenFromLocalStorage();
+    authService.token = '';
     setRedirectTo('/login');
   };
   return (

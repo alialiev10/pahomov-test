@@ -4,13 +4,26 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-
 }
+
 .title {
   font-weight: 400;
 }
 
 .button {
   width: 380px;
-  height: 38px;
 }
+
+@media screen and (max-width: 410px) {
+  .button {
+    width: 320px;
+  }
+
+}
+
+@media screen and (max-width: 350px) {
+  .button {
+    width: 290px;
+  }
+}
+

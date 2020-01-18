@@ -37,16 +37,17 @@ const LoginPage = () => {
     },
     onSubmit: async values => {
       setLoading( true);
-      await authService.authorize(values.email, values.password);
+      const { jwt } = await authService.authorize(values.email, values.password);
+      authService.token = jwt;
       setRedirectTo('/home');
     }
   });
 
   const [redirectTo, setRedirectTo] = useState();
+
   if (redirectTo) {
     return <Redirect to={redirectTo}/>
   }
-
 
   return (
     <>
@@ -100,7 +101,7 @@ const LoginPage = () => {
             variant="contained"
             type="submit"
             color="primary">Войти в аккаунт</Button>}
-          <div className={styles.link}>
+          <div className={styles.links}>
             <Link
               type="button"
               component="button"

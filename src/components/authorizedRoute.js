@@ -3,12 +3,12 @@ import Redirect from "react-router-dom/es/Redirect";
 import authService from "../services/auth.service";
 import Route from "react-router-dom/es/Route";
 
-const PrivateRouteComponent = ({children, ...rest}) => {
+const AuthorizedRoute = ({children, ...rest}) => {
   return (
     <Route
       {...rest}
       render={({location}) =>
-        !authService.token ? (
+        authService.token ? (
           children
         ) : (
           <Redirect
@@ -25,4 +25,4 @@ const PrivateRouteComponent = ({children, ...rest}) => {
 };
 
 
-export default PrivateRouteComponent;
+export default AuthorizedRoute;

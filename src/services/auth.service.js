@@ -1,21 +1,14 @@
 import {uuid} from 'uuidv4';
 import React from "react";
 
+const getTokenFromLocalStorage = () => {
+  return localStorage.getItem('token');
+};
 
-let token = '';
-
-
-window.addEventListener('load', () => {
-  token = getTokenFromLocalStorage();
-  console.log(token);
-});
+let token = getTokenFromLocalStorage();
 
 const setTokenToLocalStorage = (token) => {
   localStorage.setItem('token', token);
-};
-
-const getTokenFromLocalStorage = () => {
-  return localStorage.getItem('token');
 };
 
 const clearTokenFromLocalStorage = () => {
