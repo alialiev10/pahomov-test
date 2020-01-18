@@ -5,16 +5,12 @@ const getTokenFromLocalStorage = () => {
   return localStorage.getItem('token');
 };
 
-let token = getTokenFromLocalStorage();
-
 const setTokenToLocalStorage = (token) => {
   localStorage.setItem('token', token);
 };
 
 const clearTokenFromLocalStorage = () => {
   setTokenToLocalStorage('');
-  token = '';
-  console.log(token);
 };
 
 const authorize = (email, password) => {
@@ -22,8 +18,6 @@ const authorize = (email, password) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const jwt = uuid();
-      token = jwt;
-      setTokenToLocalStorage(token);
 
       resolve({
         jwt,
@@ -36,8 +30,9 @@ const authorize = (email, password) => {
 
 const authService = {
   authorize,
-  token,
   clearTokenFromLocalStorage,
+  getTokenFromLocalStorage,
+  setTokenToLocalStorage,
 };
 
 export default authService;

@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import styles from "./home-page.module.scss";
 import Button from "@material-ui/core/Button/Button";
 import authService from "../../services/auth.service";
-import AuthorizedRoute from "../../components/authorizedRoute";
 import Redirect from "react-router-dom/es/Redirect";
+import {TokenContext} from "../../App";
 
 const HomePage = () => {
- const [redirectTo, setRedirectTo] = useState();
+  const { setToken } = useContext(TokenContext);
+  const [redirectTo, setRedirectTo] = useState();
   if (redirectTo) {
     return <Redirect to={redirectTo}/>
   }
   const logOut = () => {
-    authService.clearTokenFromLocalStorage();
-    authService.token = '';
+    setToken('');
     setRedirectTo('/login');
   };
   return (

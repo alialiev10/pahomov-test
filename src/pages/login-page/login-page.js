@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import TextField from "@material-ui/core/TextField/TextField";
 import Button from "@material-ui/core/Button/Button";
 import Link from "@material-ui/core/Link/Link";
@@ -12,8 +12,11 @@ import hasErrors from "../../utils/form-errors-checker.util";
 import authService from "../../services/auth.service";
 import Redirect from "react-router-dom/es/Redirect";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import objectUtil from "../../utils/objectUtil";
+import {TokenContext} from "../../App";
 
 const LoginPage = () => {
+  const { setToken } = useContext(TokenContext);
   const [loading, setLoading] = useState(false);
 
   const loginForm = useFormik({
@@ -27,27 +30,16 @@ const LoginPage = () => {
         password: validateRequired(values.password),
       };
 
-      Object.entries(errors).forEach(([key, value]) => {
-        if (!value) {
-          delete errors[key];
-        }
-      });
+      objectUtil.deleteEmptyFields(errors);
 
       return errors;
     },
     onSubmit: async values => {
       setLoading( true);
       const { jwt } = await authService.authorize(values.email, values.password);
-      authService.token = jwt;
-      setRedirectTo('/home');
+      setToken(jwt);
     }
   });
-
-  const [redirectTo, setRedirectTo] = useState();
-
-  if (redirectTo) {
-    return <Redirect to={redirectTo}/>
-  }
 
   return (
     <>
